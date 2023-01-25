@@ -1,10 +1,14 @@
 import React from 'react'
 
-export default function InputComponent({title, onChange, className}) {
+export default function InputComponent({type, title, onChange, className}) {
+  const typeRef = {
+    varchar: 'text',
+    date: 'date'
+  }
   return (
-    <div className='flex flex-col items-start justify-start space-y-1 '>
+    <div className='flex flex-col items-start justify-start space-y-1 my-4 mx-1'>
         <span className='text-gray-500'>{title}</span>
-        <input onChange={(e) => { onChange(e) }} className="p-3 border-solid border outline-none focus:border-2 border-gray-500 rounded" type="text" placeholder={title}/>
+        <input type="" placeholder={title} onChange={(e) => { onChange(e) }} className="input input-bordered input-primary w-full max-w-xs" />
     </div>
   )
 }
