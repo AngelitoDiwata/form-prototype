@@ -1,9 +1,13 @@
 import { Sequelize } from "sequelize";
-// Parameters are as follows: Database name, Username, Password
-const sequelize = new Sequelize('project_master', 'root1', '', {
-    //Host machine to connect to
+
+const credentials = {
+    database: 'project_master',
+    username: 'root',
+    password: ''
+}
+
+const sequelize = new Sequelize(credentials.database, credentials.username, credentials.password, {
     host: 'localhost',
-    //SQL dialect
     dialect: 'mysql'
 });
 

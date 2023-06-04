@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import FormPanel from '../components/FormPanel'
-import InputComponent from '../components/InputComponent'
-import ModelPanel from '../components/ModelPanel'
-import QueryPanel from '../components/QueryPanel'
+import React, { useEffect, useState } from 'react'
+import FormPanel from './FormPanel'
 
-export default function query() {
-    const [query, setQuery] = useState('SELECT * FROM t_users')
+export default function FormComponent({ query, title }) {
     const [data, setData] = useState([''])
     const [dataModel, setDataModel] = useState({})
     const [tableSpec, setTableSpec] = useState([''])
 
-    const setQueryData = (e) => {
-        setQuery(e.target.value)
-    }
+    useEffect(() => {
+        APIRequest(`api/hello`)
+    }, [])
 
     const setModel = (item, value = '') => {
         setDataModel((prevState) => ({ ...prevState, [item]: value }))
@@ -27,9 +23,9 @@ export default function query() {
             body: JSON.stringify({ data: query }),
         }).then((res) => res.json()).then((data) => {
             setData(data)
+
+            GetTableSpecs(queryString)
         })
-        GetTableSpecs(queryString)
-        setDataModel({})
     }
 
     const dataLength = () => {
@@ -50,21 +46,20 @@ export default function query() {
         }).then((res) => res.json()).then((data) => {
             setTableSpec(data)
         })
-        return 
+        return
     }
 
-    useEffect(() => {
-        APIRequest(`/api/hello`)
-        Object.keys(data[0]).forEach((item) => {
-            setDataModel((prevState) => ({ ...prevState, [item]: '' }))
-        })
+    const submitDataModel = () => {
+        console.log(dataModel)
+    }
 
-    }, [])
     return (
-        <div className="w-full flex flex-row items-start justify-between h-screen">
-            <QueryPanel query={query} onChange={setQueryData} onSubmit={() => APIRequest(`/api/hello`)} />
-            <FormPanel tableSpec={tableSpec} data={data} dataLength={dataLength} onChange={(e, item) => setModel(item, e.target.value)} />
-            <ModelPanel dataModel={dataModel} />
+        <div className='w-11/12 md:w-1/2 m-auto'>
+            <FormPanel formTitle={title} tableSpec={tableSpec} data={data} dataLength={dataLength} onChange={(e, item) => setModel(item, e.target.value)} />
+            <div className='w-full flex flex-row items-center justify-end space-x-2 px-1 my-3'>
+                <button onClick={submitDataModel} className="btn btn-active btn-primary">Submit</button>
+                <button className="btn btn-active btn-neutral">Cancel</button>
+            </div>
         </div>
     )
 }
