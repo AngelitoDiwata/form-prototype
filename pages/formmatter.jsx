@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputComponent from '../components/InputComponent'
 
 export default function formmatter() {
@@ -30,6 +30,7 @@ export default function formmatter() {
         actionQuery: ""
     })
 
+
     const [dataModel, setDataModel] = useState({})
 
     const setModel = (item, value = '') => {
@@ -41,10 +42,6 @@ export default function formmatter() {
         password: InputComponent,
         date: InputComponent,
     }
-
-    useEffect(() => {
-        console.log(dataModel)
-    }, [dataModel])
 
     const renderFormData = (data) => {
         return (
@@ -59,7 +56,6 @@ export default function formmatter() {
         )
     }
 
-
     return (
         <div className='w-fit max-w-2xl py-5 m-auto'>
             <h1 className='font-bold text-xl'>{formData.title}</h1>
@@ -69,6 +65,5 @@ export default function formmatter() {
                 }
             </form>
         </div>
-
     )
 }
